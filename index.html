@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>BOAT AI Lab</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PRIVATE BOAT RACE ANALYTICS</p>
+      <h1>BOAT AI Lab</h1>
+    </div>
+    <div class="status-pill" id="dataStatus">æ‰‹å‹•ãƒ‡ãƒ¼ã‚¿</div>
+  </header>
+
+  <main class="page-shell">
+    <nav class="tabs" aria-label="ç”»é¢åˆ‡æ›¿">
+      <button class="tab is-active" data-tab="race">äºˆæƒ³</button>
+      <button class="tab" data-tab="stats">æˆç¸¾</button>
+      <button class="tab" data-tab="settings">è¨­å®š</button>
+    </nav>
+
+    <section class="tab-panel is-active" id="panel-race">
+      <div class="hero-grid">
+        <article class="card hero-card">
+          <div class="row between gap">
+            <div>
+              <p class="muted small">ä»Šæ—¥ã®å¯¾è±¡ãƒ¬ãƒ¼ã‚¹</p>
+              <h2 id="raceTitle">ã‚µãƒ³ãƒ—ãƒ«å ´ 8R</h2>
+              <p class="muted" id="raceMeta">å±•ç¤ºå¾Œ / é€²å…¥å›ºå®šãªã—</p>
+            </div>
+            <div class="decision" id="decisionBadge">è²·ã„</div>
+          </div>
+          <div class="confidence-wrap">
+            <div>
+              <span class="muted small">è‡ªä¿¡åº¦</span>
+              <div class="stars" id="confidenceStars">â˜…â˜…â˜…â˜…â˜†</div>
+            </div>
+            <div class="metric">
+              <span>1ç€æœ¬å‘½</span><strong id="topBoat">1å·è‰‡</strong>
+            </div>
+            <div class="metric">
+              <span>æŽ¨å®š1ç€çŽ‡</span><strong id="topWinProb">--%</strong>
+            </div>
+          </div>
+          <p class="reason" id="raceReason">ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹ã¨è²·ã„/è¦‹ã‚’åˆ¤å®šã—ã¾ã™ã€‚</p>
+        </article>
+
+        <article class="card budget-card">
+          <p class="muted small">è³¼å…¥äºˆç®—</p>
+          <div class="budget-buttons" id="budgetButtons">
+            <button data-budget="1000">1,000å††</button>
+            <button class="is-active" data-budget="2000">2,000å††</button>
+            <button data-budget="3000">3,000å††</button>
+            <button data-budget="5000">5,000å††</button>
+          </div>
+          <div class="input-row">
+            <label for="targetReturn">æœ¬ç·šæœ€ä½Žæ‰•æˆ»å€çŽ‡</label>
+            <input id="targetReturn" type="number" min="1" max="3" step="0.05" value="1.10" />
+          </div>
+          <button class="primary full" id="recalcBtn">å†è¨ˆç®—</button>
+        </article>
+      </div>
+
+      <article class="card">
+        <div class="row between gap wrap">
+          <div>
+            <p class="muted small">6è‰‡ãƒ‡ãƒ¼ã‚¿</p>
+            <h3>åŸºç¤Žãƒ‡ãƒ¼ã‚¿ â†’ ä»Šç¯€ãƒ»ãƒ¢ãƒ¼ã‚¿ãƒ¼ â†’ å±•ç¤ºã§è£œæ­£</h3>
+          </div>
+          <div class="row gap wrap">
+            <button class="secondary" id="loadSampleBtn">ã‚µãƒ³ãƒ—ãƒ«èª­è¾¼</button>
+            <button class="secondary" id="clearExhibitionBtn">å±•ç¤ºå‰ã«æˆ»ã™</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="boat-table" id="boatTable">
+            <thead>
+              <tr>
+                <th>è‰‡</th><th>é¸æ‰‹</th><th>ç´š</th><th>å…¨å›½å‹çŽ‡</th><th>å½“åœ°</th><th>ã‚³ãƒ¼ã‚¹1ç€%</th><th>ãƒ¢ãƒ¼ã‚¿ãƒ¼2é€£%</th><th>ä»Šç¯€æŒ‡æ•°</th><th>å±•ç¤º</th><th>å±•ç¤ºST</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="footnote">â€»ã€Œã‚³ãƒ¼ã‚¹1ç€%ã€ã¯æž ã§ã¯ãªãæƒ³å®šé€²å…¥ã‚³ãƒ¼ã‚¹åˆ¥ã®å®Ÿç¸¾ã‚’å…¥ã‚Œã‚‹æƒ³å®šã§ã™ã€‚ä»Šç¯€æŒ‡æ•°ã¯0ã€œ100ã§ç°¡æ˜“å…¥åŠ›ã€‚</p>
+      </article>
+
+      <div class="two-col">
+        <article class="card">
+          <div class="row between gap">
+            <div>
+              <p class="muted small">AIè©•ä¾¡</p>
+              <h3>è‰‡è©•ä¾¡</h3>
+            </div>
+            <span class="tag" id="stageTag">å±•ç¤ºå¾Œ</span>
+          </div>
+          <div id="boatRanking" class="ranking"></div>
+        </article>
+
+        <article class="card">
+          <div class="row between gap">
+            <div>
+              <p class="muted small">3é€£å˜</p>
+              <h3>æŽ¨å¥¨è²·ã„ç›®</h3>
+            </div>
+            <span class="tag">100å††å˜ä½</span>
+          </div>
+          <div id="betPlan" class="bet-plan"></div>
+        </article>
+      </div>
+
+      <article class="card">
+        <div class="row between gap wrap">
+          <div>
+            <p class="muted small">ã‚ªãƒƒã‚ºç–¡9aiy.#Ü‚ˆÏ¹`&z(ç:,­øàa9æë¸àk¸àª¸ààøà®ÚÏ‚ˆÙ]‚ˆÛ\ÜÏH›]]YÛX[¹§+9íæ¸à«8àçúf,¹«h¸àj9êm8àn8àk¹«¢úhczacyb!¸àjù/oùå*Ü‚ˆÙ]‚ˆ]ˆYH›ÙÑÜšYˆÛ\ÜÏH›ÙËYÜšYÙ]‚ˆØ\XÛO‚‚ˆ\XÛHÛ\ÜÏH˜Ø\™™\Ý[XØ\™‚ˆ]‚ˆÛ\ÜÏH›]]YÛX[¸àë8àï8à®yí`¹.¡¹o£Ü‚ˆÏ¹íd9§§8à¤º*&:c!ÏÚÏ‚ˆÙ]‚ˆ]ˆÛ\ÜÏHœ™\Ý[XÛÛ›ÛÈ‚ˆ[œ]YHœ™\Ý[ÛÛX›ÈˆXÙZÛ\H¹/¢Îˆ‹LKLˆˆX^[™ÝHHˆÏ‚ˆ[œ]YHœ^[Ý]Lˆ\OH›[X™\ˆˆXÙZÛ\HŒL9a¡¹¢ey¢.È9/¢ÎˆLLˆÏ‚ˆ]ÛˆÛ\ÜÏHœš[X\žHˆYHœØ]™T™\Ý[ˆ¹¢$9î/¸àjù/çykfØ]Û‚ˆÙ]‚ˆØ\XÛO‚ˆÜÙXÝ[Û‚‚ˆÙXÝ[ÛˆÛ\ÜÏHX‹\[™[ˆYHœ[™[\Ý]È‚ˆ]ˆÛ\ÜÏHœÝ]ËYÜšYˆYHœÝ]ÐØ\™ÈÙ]‚ˆ\XÛHÛ\ÜÏH˜Ø\™‚ˆ]ˆÛ\ÜÏHœ›ÝÈ™]ÙY[ˆØ\‚ˆ]Û\ÜÏH›]]YÛX[¹liy­.OÜÏ¹.¢9 ìù¢$9î/ÚÏÙ]‚ˆ]ÛˆÛ\ÜÏH™[™Ù\‹YÚÜÝˆYHœ™\Ù]\ÝÜžPˆ¹liy«m8à¤¹b'y§'ùc%Ø]Û‚ˆÙ]‚ˆ]ˆÛ\ÜÏHX›K\ØÜ›Û‚ˆX›HÛ\ÜÏHš\ÝÜžK]X›H‚ˆXY¹o­ùí£ÏÝ¸àë8àï8à®OÝ¹b)9k¦Ý¹¢¥z-çÏÝ¹íd9§§Ý¹¢ey¢.ÏÝ¹cã¹¥+ÏÝÝÝXY‚ˆ›ÙHYHš\ÝÜžP›ÙHÝ›ÙO‚ˆÝX›O‚ˆÙ]‚ˆØ\XÛO‚ˆÜÙXÝ[Û‚‚ˆÙXÝ[ÛˆÛ\ÜÏHX‹\[™[ˆYHœ[™[\Ù][™ÜÈ‚ˆ\XÛHÛ\ÜÏH˜Ø\™Ù][™ÜËXÛÜH‚ˆÛ\ÜÏH›]]YÛX[º*+z*"9¥®ycèOÜ‚ˆÏ¸àdøàk³U”8àk¹onyæï‹ÚÏ‚ˆ[‚ˆO¹.¢9 ìøàk¹.+yoàøàkùa£yãï¹cëú ïxàj¹¥l9`)8àëxà®8ààøà«øà “xàkùl!¹§ixà z*«9¦#¹å'ù¢$8àîù/¢ùi%¹b)9¥«xàjúfd9k¦¸à ÛO‚ˆO“ÐUPÑyak9o#øàk¹. 9«(xàáøàï8à¯øà¤º!ê¹bczfáº*"8àeøà xà¬øàï8à®yb)yã¡øà¡9¬n¸ào¸à¢¹¢bù£!ùª&xà¤¹/g8à¢øà ÛO‚ˆO¹leyé.¹bcx¡¤¹leyé.¹o£8àiú*ey/¨xà¤¹¦í9¥¬8à ¹leyé.¸àkùgî¹é#¸àáøàï8à¯øà¤º)¡¸àeøàfxàc¸àj¸àa8à ÛO‚ˆO¹§+9íæ¹æ¡9.+y¦`¸àk¹¢ey¢.øàc9íãù¢¥z,áøà¤¹."¹fç¸à¢øà¢8àa¸àjú,áúaäzacyb!¸àeøà y«¢úhcxà¤¹êm8àn8à ÛO‚ˆO¸à#:)¢øà#xà¤¹«hùo#øàj¹.¢9 ìùíd9§§8àj8àeøài¹/çykf8àeøà z,­øàhøàgùh-9d"8àk¹.ë¹ ìù¢$9î/¸à ¹o£8àiù«å:/ øàiøàcxà¢ù©âú`(8àjøàfxà¢øà ÛO‚ˆÝ[‚ˆØ\XÛO‚ˆÜÙXÝ[Û‚ˆÛXZ[‚‚ˆØÜš\\OH›[Ù[HˆÜ˜ÏH‹‹ÜÜ˜ËØ\šœÈÜØÜš\‚Ø›ÙO‚Ú[‚
